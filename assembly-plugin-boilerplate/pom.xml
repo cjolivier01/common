@@ -41,6 +41,30 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 
         <plugins>
             <plugin>
+                <!--
+                Get the actual directory of the target in this pom file
+            -->
+                <groupId>org.commonjava.maven.plugins</groupId>
+                <artifactId>directory-maven-plugin</artifactId>
+                <version>0.1</version>
+                <executions>
+                    <execution>
+                        <id>directories</id>
+                        <goals>
+                            <goal>directory-of</goal>
+                        </goals>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <property>assembly-plugin-boilerplate.topdir</property>
+                            <project>
+                                <groupId>io.confluent</groupId>
+                                <artifactId>assembly-plugin-boilerplate</artifactId>
+                            </project>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
@@ -52,7 +76,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                         <phase>package</phase>
                         <configuration>
                             <descriptors>
-                                <descriptor>src/assembly/resources.xml</descriptor>
+                                <descriptor>${assembly-plugin-boilerplate.topdir}/../src/assembly/resources.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>
